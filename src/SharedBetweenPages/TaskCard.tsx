@@ -1,11 +1,6 @@
 import React, {FC, useState} from "react";
 import {Task} from "../../Store";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import {StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import Popup from "./Popup";
 
 const TaskCard: FC<{
@@ -39,12 +34,16 @@ const TaskCard: FC<{
 
   return (
     <>
-      <TouchableOpacity
+      <TouchableHighlight
         style={[styles.buttonContainer, {backgroundColor: backgroundColor}]}
         onPress={() => setIsVisible(true)}>
-        <Text style={{marginBottom: 15, marginHorizontal: 5}}>{task.title}</Text>
-        {child}
-      </TouchableOpacity>
+        <View>
+          <Text style={{marginBottom: 15, marginHorizontal: 5}}>
+            {task.title}
+          </Text>
+          {child}
+        </View>
+      </TouchableHighlight>
       <Popup
         getIsVisible={getIsVisible}
         setIsVisible={setIsVisible}

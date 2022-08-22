@@ -70,7 +70,7 @@ const HomePage: FC = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView contentInsetAdjustmentBehavior={"automatic"}>
         <View>
           {getFrontlogTasks?.length === 0 ? (

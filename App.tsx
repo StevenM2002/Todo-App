@@ -97,7 +97,6 @@ const App = () => {
           name={"Colour Wall"}
           component={ColourWallPage}
           options={{
-            headerTitle: () => <AddTaskHeader title={"Colour Wall"} />,
             tabBarIcon: ({color, size}) => (
               <MaterialCommunityIcons name="wall" color={color} size={size} />
             ),

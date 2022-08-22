@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {StyleSheet, Text, TouchableOpacity} from "react-native";
+import {StyleSheet, Text, TouchableHighlight} from "react-native";
 
 interface Props {
   onPress: () => void;
@@ -14,7 +14,6 @@ const ButtonRectangle: FC<Props> = ({
 }) => {
   const styles = StyleSheet.create({
     container: {
-      borderWidth: 1,
       justifyContent: "center",
       padding: 10,
       borderColor: `${backgroundColor}`,
@@ -28,9 +27,9 @@ const ButtonRectangle: FC<Props> = ({
     },
   });
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.container]}>
+    <TouchableHighlight onPress={onPress} style={[styles.container]}>
       <Text style={styles.textStyle}>{title}</Text>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {SafeAreaView, StyleSheet, View} from "react-native";
+import {SafeAreaView} from "react-native";
 import Store, {WallDot} from "../../Store";
 import Dot from "./Dot";
 
@@ -14,7 +14,9 @@ const ColourWallPage: FC = () => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
-      {getWallDots?.map(dotInfo => <Dot dotInfo={dotInfo} key={dotInfo.id} />)}
+      {getWallDots?.map(dotInfo => (
+        <Dot dotInfo={dotInfo} key={dotInfo.id} />
+      ))}
     </SafeAreaView>
   );
 };

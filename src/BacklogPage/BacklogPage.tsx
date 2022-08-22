@@ -53,7 +53,7 @@ const BacklogPage: FC = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView contentInsetAdjustmentBehavior={"automatic"}>
         <View>
           {getBacklogTasks?.length === 0 ? (

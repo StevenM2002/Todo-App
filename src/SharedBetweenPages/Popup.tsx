@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Modal, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Modal, SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
 import ButtonRectangle from "./ButtonRectangle";
 
 const Popup: FC<{

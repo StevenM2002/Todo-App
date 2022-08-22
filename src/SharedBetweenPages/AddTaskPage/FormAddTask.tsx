@@ -63,7 +63,7 @@ const FormAddTask: FC<{
       <View style={{marginTop: 10}}>
         <ButtonRectangle
           onPress={onSubmit}
-          title={"Submit"}
+          title={"Add task!"}
           backgroundColor={"#46C2E0"}
         />
       </View>
