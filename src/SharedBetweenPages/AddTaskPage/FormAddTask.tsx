@@ -8,6 +8,7 @@ const FormAddTask: FC<{
   setIsVisible: (value: boolean) => void;
 }> = ({setIsVisible}) => {
   const [isShowInputErrorMessage, setIsShowInputErrorMessage] = useState(false);
+
   const inputs: {title: string; description: string} = {
     title: "",
     description: "",
@@ -47,6 +48,7 @@ const FormAddTask: FC<{
           <></>
         )}
         <InputText
+          autoFocus={true}
           placeholder={"Task Name"}
           onChangeText={value => {
             inputs.title = value;

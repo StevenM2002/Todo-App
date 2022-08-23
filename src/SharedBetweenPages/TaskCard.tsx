@@ -36,7 +36,9 @@ const TaskCard: FC<{
     <>
       <TouchableHighlight
         style={[styles.buttonContainer, {backgroundColor: backgroundColor}]}
-        onPress={() => setIsVisible(true)}>
+        onPress={() => setIsVisible(true)}
+        underlayColor={"#B7B7B7"}
+        activeOpacity={0.7}>
         <View>
           <Text style={{marginBottom: 15, marginHorizontal: 5}}>
             {task.title}

@@ -27,7 +27,7 @@ const ButtonRectangle: FC<Props> = ({
     },
   });
   return (
-    <TouchableHighlight onPress={onPress} style={[styles.container]}>
+    <TouchableHighlight onPress={onPress} underlayColor={"#B7B7B7"} activeOpacity={0.7} style={[styles.container]}>
       <Text style={styles.textStyle}>{title}</Text>
     </TouchableHighlight>
   );
