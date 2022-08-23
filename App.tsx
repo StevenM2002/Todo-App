@@ -11,20 +11,21 @@
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {NavigationContainer} from "@react-navigation/native";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomePage from "./src/HomePage/HomePage";
 import BacklogPage from "./src/BacklogPage/BacklogPage";
 import Store, {StoreType} from "./Store";
-import AddTaskHeader from "./src/SharedBetweenPages/AddTaskHeader";
 import ColourWallPage from "./src/ColourWallPage/ColourWallPage";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const App = () => {
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
-  const initStore = async (): Promise<void> => {
+  const initStore = () => {
     try {
-      await Store.getTaskItems();
+      Store.getTaskItems().catch(e => {
+        throw e;
+      });
     } catch (e) {
       const storeToAdd: StoreType = {
         frontlogIds: [1],
@@ -54,13 +55,7 @@ const App = () => {
     }
   };
   useEffect(() => {
-    (async () => {
-      try {
-        await initStore();
-      } catch (e) {
-        console.log("initStore:useEffect:App", e);
-      }
-    })();
+    initStore();
   }, []);
   if (!isReadyToRender) {
     return <></>;
@@ -68,37 +63,38 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator tabBarPosition={"bottom"} initialRouteName={"Home"}>
         <Tab.Screen
+          key={1}
           name={"Home"}
           component={HomePage}
           options={{
-            headerTitle: () => <AddTaskHeader title={"Home"} />,
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons name="home" color={color} size={25} />
             ),
           }}
         />
         <Tab.Screen
+          key={2}
           name={"Backlog"}
           component={BacklogPage}
           options={{
-            headerTitle: () => <AddTaskHeader title={"Backlog"} />,
-            tabBarIcon: ({color, size}) => (
+            tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
                 name="text-box-multiple-outline"
                 color={color}
-                size={size}
+                size={25}
               />
             ),
           }}
         />
         <Tab.Screen
+          key={3}
           name={"Colour Wall"}
           component={ColourWallPage}
           options={{
-            tabBarIcon: ({color, size}) => (
-              <MaterialCommunityIcons name="wall" color={color} size={size} />
+            tabBarIcon: ({color}) => (
+              <MaterialCommunityIcons name="wall" color={color} size={25} />
             ),
           }}
         />

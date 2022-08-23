@@ -3,6 +3,7 @@ import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import Store, {Task} from "../../Store";
 import TaskCard from "../SharedBetweenPages/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
+import AddTaskHeader from "../SharedBetweenPages/AddTaskHeader";
 
 const BacklogPage: FC = () => {
   const [getBacklogTasks, setBacklogTasks] = useState<Task[]>();
@@ -54,6 +55,7 @@ const BacklogPage: FC = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <AddTaskHeader title={"Backlog"} />
       <ScrollView contentInsetAdjustmentBehavior={"automatic"}>
         <View>
           {getBacklogTasks?.length === 0 ? (

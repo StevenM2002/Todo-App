@@ -7,9 +7,9 @@ const AddTaskHeader: FC<{title: string}> = ({title}) => {
   const [isAddTaskPageVisible, setIsAddTaskPageVisible] = useState(false);
   return (
     <>
-      <View style={styles.centerContainer}>
+      <View style={[styles.centerContainer, styles.header]}>
         <Text style={styles.text}>{title}</Text>
-        <View style={{position: "absolute", right: 0, top: 0}}>
+        <View style={styles.button}>
           <ButtonRectangle
             onPress={() => setIsAddTaskPageVisible(true)}
             title={"Add Task"}
@@ -31,12 +31,23 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "1C1C1E",
     alignSelf: "center",
+    textAlign: "center",
   },
   centerContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     minWidth: "100%",
+    alignItems: "center",
+  },
+  header: {
+    marginBottom: 13,
+    maxHeight: "3%",
+  },
+  button: {
+    position: "absolute",
+    right: 10,
+    top: "auto",
   },
 });
 
