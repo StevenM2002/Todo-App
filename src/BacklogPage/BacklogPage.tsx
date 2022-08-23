@@ -41,7 +41,7 @@ const BacklogPage: FC = () => {
         }}>
         <ButtonRectangle
           onPress={() => onMoveToFrontend(task)}
-          title={"Move to frontlog"}
+          title={"Move to Home"}
           backgroundColor={"#46C2E0"}
         />
         <ButtonRectangle

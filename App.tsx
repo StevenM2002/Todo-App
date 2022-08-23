@@ -7,16 +7,15 @@ import Store, {StoreType} from "./Store";
 import ColourWallPage from "./src/ColourWallPage/ColourWallPage";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {LogBox} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 LogBox.ignoreLogs(["Sending..."]);
 const Tab = createMaterialTopTabNavigator();
 
 const App = () => {
   const [isReadyToRender, setIsReadyToRender] = useState<boolean>(false);
-  const initStore = () => {
+  const initStore = async (): Promise<void> => {
     try {
-      Store.getTaskItems().catch(e => {
-        throw e;
-      });
+      await Store.getTaskItems();
     } catch (e) {
       const storeToAdd: StoreType = {
         frontlogIds: [1],
@@ -46,7 +45,7 @@ const App = () => {
     }
   };
   useEffect(() => {
-    initStore();
+    initStore().catch(e => "useEffect: App " + e);
   }, []);
   if (!isReadyToRender) {
     return <></>;
