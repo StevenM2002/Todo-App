@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 13,
     maxHeight: "3%",
+    minHeight: "3%",
   },
   button: {
     position: "absolute",

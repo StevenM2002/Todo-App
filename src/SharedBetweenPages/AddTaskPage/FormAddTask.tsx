@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {FC, useRef, useState} from "react";
 import {StyleSheet, Text, View} from "react-native";
 import InputText from "../InputText";
 import ButtonRectangle from "../ButtonRectangle";
@@ -8,14 +8,14 @@ const FormAddTask: FC<{
   setIsVisible: (value: boolean) => void;
 }> = ({setIsVisible}) => {
   const [isShowInputErrorMessage, setIsShowInputErrorMessage] = useState(false);
-
-  const inputs: {title: string; description: string} = {
-    title: "",
-    description: "",
-  };
+  const inputs: React.MutableRefObject<{description: string; title: string}> =
+    useRef({
+      title: "",
+      description: "",
+    });
 
   const onSubmit = () => {
-    if (inputs.title.trim().length === 0) {
+    if (inputs.current.title.trim().length === 0) {
       setIsShowInputErrorMessage(true);
       return;
     }
@@ -23,8 +23,8 @@ const FormAddTask: FC<{
       const store = await Store.getTaskItems();
       const generatedId = Math.max(...store.identifiers) + 1;
       store.tasks[generatedId] = {
-        title: inputs.title,
-        description: inputs.description,
+        title: inputs.current.title,
+        description: inputs.current.description,
         metaData: {timeCreated: Date.now()},
         id: generatedId,
       };
@@ -51,15 +51,15 @@ const FormAddTask: FC<{
           autoFocus={true}
           placeholder={"Task Name"}
           onChangeText={value => {
-            inputs.title = value;
             setIsShowInputErrorMessage(false);
+            inputs.current.title = value;
           }}
         />
       </View>
       <View style={styles.inputContainer}>
         <InputText
           placeholder={"Description"}
-          onChangeText={value => (inputs.description = value)}
+          onChangeText={value => (inputs.current.description = value)}
         />
       </View>
       <View style={{marginTop: 10}}>
