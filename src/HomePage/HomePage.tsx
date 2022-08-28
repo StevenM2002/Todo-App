@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import Store, {Task} from "../../Store";
 import TaskCard from "../SharedBetweenPages/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
@@ -90,11 +90,5 @@ const HomePage: FC = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    // margin: 10,
-  },
-});
 
 export default HomePage;

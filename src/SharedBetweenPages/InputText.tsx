@@ -6,11 +6,13 @@ const InputText: FC<{
   placeholder?: string;
   onChangeText: (value: string) => void;
   autoFocus?: boolean;
+  defaultValue?: string;
 }> = ({
   onChangeText,
   placeholder,
   borderColor = "#B48EFF",
   autoFocus = false,
+  defaultValue,
 }) => {
   return (
     <TextInput
@@ -18,6 +20,7 @@ const InputText: FC<{
       onChangeText={onChangeText}
       placeholder={placeholder}
       multiline={true}
+      value={defaultValue}
       style={{
         borderWidth: 1,
         borderColor: borderColor,
