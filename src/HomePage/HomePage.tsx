@@ -5,6 +5,7 @@ import TaskCard from "../SharedBetweenPages/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
 import PossibleDotColors from "../ColourWallPage/PossibleDotColors";
 import AddTaskHeader from "../SharedBetweenPages/AddTaskHeader";
+import Dropdown from "../SharedBetweenPages/Dropdown";
 
 function randomInt(max: number = 100): number {
   return Math.floor(Math.random() * max);

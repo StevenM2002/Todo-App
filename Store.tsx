@@ -26,6 +26,7 @@ export interface Task {
   metaData: {
     timeCreated: number;
   };
+  timeLimitToComplete?: number;
 }
 
 const Store = {

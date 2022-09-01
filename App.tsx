@@ -7,7 +7,6 @@ import Store, {StoreType} from "./Store";
 import ColourWallPage from "./src/ColourWallPage/ColourWallPage";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {LogBox} from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 LogBox.ignoreLogs(["Sending..."]);
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,6 +27,7 @@ const App = () => {
             description:
               "Move me to the frontlog AKA home to start me as a task.\n You can move me back and then delete me forever",
             metaData: {timeCreated: Date.now()},
+            timeLimitToComplete: undefined,
           },
           1: {
             id: 1,
@@ -35,6 +35,7 @@ const App = () => {
             description:
               "Press the add task button to add a task to the backlog which you can then move to the frontlog/ home page here. \n\nWhen you complete this task, you will see me on your Colour Wall as a dot!\n\n Try and fill the Colour wall",
             metaData: {timeCreated: Date.now()},
+            timeLimitToComplete: undefined,
           },
         },
         identifiers: [0, 1],

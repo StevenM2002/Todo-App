@@ -4,10 +4,13 @@ import {StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import Popup from "./Popup";
 import InputText from "./InputText";
 import ButtonRectangle from "./ButtonRectangle";
+import TimeLimitDropDown from "./AddTaskPage/TimeLimitDropDown";
+import DateTimeHelpers from "../../helpers/DateTimeHelpers";
 
 interface EditableFields {
   title: boolean;
   description: boolean;
+  timeLimit: boolean;
 }
 
 const TaskCard: FC<{
@@ -19,11 +22,17 @@ const TaskCard: FC<{
   const [isEditMode, setIsEditMode] = useState<EditableFields>({
     title: false,
     description: false,
+    timeLimit: false,
   });
   const [isErrMsg, setIsErrMsg] = useState<boolean>(false);
-  const taskRef = useRef<{title: string; description: string}>({
+  const taskRef = useRef<{
+    title: string;
+    description: string;
+    timeLimit?: number;
+  }>({
     title: task.title,
     description: task.description,
+    timeLimit: task.timeLimitToComplete,
   });
 
   const onCancel = () => {
@@ -55,6 +64,9 @@ const TaskCard: FC<{
         }
         if (isEditMode.description) {
           store.tasks[task.id].description = taskRef.current.description;
+        }
+        if (isEditMode.timeLimit) {
+          store.tasks[task.id].timeLimitToComplete = taskRef.current.timeLimit;
         }
         return store;
       })
@@ -122,6 +134,30 @@ const TaskCard: FC<{
               });
             }}>
             {descriptionToRender}
+          </Text>
+        )}
+        <Text
+          style={{
+            textDecorationLine: "underline",
+            fontWeight: "bold",
+            marginBottom: 6,
+          }}>
+          Time limit:
+        </Text>
+        {isEditMode.timeLimit ? (
+          <TimeLimitDropDown
+            setSelectedValue={value => (taskRef.current.timeLimit = value)}
+          />
+        ) : (
+          <Text
+            onLongPress={() => {
+              setIsEditMode(prevState => {
+                taskRef.current.timeLimit = task.timeLimitToComplete;
+                prevState.timeLimit = true;
+                return prevState;
+              });
+            }}>
+            {DateTimeHelpers.toString(task.timeLimitToComplete)}
           </Text>
         )}
 

@@ -3,16 +3,21 @@ import {StyleSheet, Text, View} from "react-native";
 import InputText from "../InputText";
 import ButtonRectangle from "../ButtonRectangle";
 import Store from "../../../Store";
+import TimeLimitDropDown from "./TimeLimitDropDown";
 
 const FormAddTask: FC<{
   setIsVisible: (value: boolean) => void;
 }> = ({setIsVisible}) => {
   const [isShowInputErrorMessage, setIsShowInputErrorMessage] = useState(false);
-  const inputs: React.MutableRefObject<{description: string; title: string}> =
-    useRef({
-      title: "",
-      description: "",
-    });
+  const inputs: React.MutableRefObject<{
+    description: string;
+    title: string;
+    timeLimit?: number;
+  }> = useRef({
+    title: "",
+    description: "",
+    timeLimit: undefined,
+  });
 
   const onSubmit = () => {
     if (inputs.current.title.trim().length === 0) {
@@ -27,6 +32,7 @@ const FormAddTask: FC<{
         description: inputs.current.description,
         metaData: {timeCreated: Date.now()},
         id: generatedId,
+        timeLimitToComplete: inputs.current.timeLimit,
       };
       store.backlogIds = [...store.backlogIds, generatedId];
       store.identifiers = [...store.identifiers, generatedId];
@@ -60,6 +66,11 @@ const FormAddTask: FC<{
         <InputText
           placeholder={"Description"}
           onChangeText={value => (inputs.current.description = value)}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <TimeLimitDropDown
+          setSelectedValue={value => (inputs.current.timeLimit = value)}
         />
       </View>
       <View style={{marginTop: 10}}>
