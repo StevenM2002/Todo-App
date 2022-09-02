@@ -1,11 +1,10 @@
 import React, {FC, useState} from "react";
 import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import Store, {Task} from "../../Store";
-import TaskCard from "../SharedBetweenPages/TaskCard";
+import TaskCard from "../SharedBetweenPages/TaskCards/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
 import PossibleDotColors from "../ColourWallPage/PossibleDotColors";
 import AddTaskHeader from "../SharedBetweenPages/AddTaskHeader";
-import Dropdown from "../SharedBetweenPages/Dropdown";
 
 function randomInt(max: number = 100): number {
   return Math.floor(Math.random() * max);
@@ -33,6 +32,7 @@ const HomePage: FC = () => {
             ],
           size: randomInt(9) + 4,
         };
+        store.tasks[task.id].metaData.timeOfCompletion = Date.now();
         Store.setStore(store);
       } catch (e) {
         console.log("onComplete: HomePage", e);
@@ -45,6 +45,7 @@ const HomePage: FC = () => {
       const store = await Store.getTaskItems();
       store.frontlogIds = store.frontlogIds.filter(id => id !== task.id);
       store.backlogIds.push(task.id);
+      store.tasks[task.id].metaData.timeMovedToBacklog.push(Date.now());
       Store.setStore(store);
     })();
   };

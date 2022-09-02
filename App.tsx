@@ -26,7 +26,12 @@ const App = () => {
             title: "Move to frontlog/ home",
             description:
               "Move me to the frontlog AKA home to start me as a task.\n You can move me back and then delete me forever",
-            metaData: {timeCreated: Date.now()},
+            metaData: {
+              timeCreated: Date.now(),
+              timeMovedToFrontlog: [],
+              timeMovedToBacklog: [],
+              timeOfCompletion: undefined,
+            },
             timeLimitToComplete: undefined,
           },
           1: {
@@ -34,7 +39,12 @@ const App = () => {
             title: "Make your first task",
             description:
               "Press the add task button to add a task to the backlog which you can then move to the frontlog/ home page here. \n\nWhen you complete this task, you will see me on your Colour Wall as a dot!\n\n Try and fill the Colour wall",
-            metaData: {timeCreated: Date.now()},
+            metaData: {
+              timeCreated: Date.now(),
+              timeMovedToFrontlog: [],
+              timeMovedToBacklog: [],
+              timeOfCompletion: undefined,
+            },
             timeLimitToComplete: undefined,
           },
         },

@@ -1,11 +1,11 @@
 import React, {FC, useRef, useState} from "react";
-import Store, {Task} from "../../Store";
+import Store, {Task} from "../../../Store";
 import {StyleSheet, Text, TouchableHighlight, View} from "react-native";
-import Popup from "./Popup";
-import InputText from "./InputText";
-import ButtonRectangle from "./ButtonRectangle";
-import TimeLimitDropDown from "./AddTaskPage/TimeLimitDropDown";
-import DateTimeHelpers from "../../helpers/DateTimeHelpers";
+import Popup from "../Popup";
+import InputText from "../InputText";
+import ButtonRectangle from "../ButtonRectangle";
+import TimeLimitDropDown from "../AddTaskPage/TimeLimitDropDown";
+import DateTimeHelpers from "../../../helpers/DateTimeHelpers";
 
 interface EditableFields {
   title: boolean;

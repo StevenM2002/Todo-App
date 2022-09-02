@@ -30,7 +30,12 @@ const FormAddTask: FC<{
       store.tasks[generatedId] = {
         title: inputs.current.title,
         description: inputs.current.description,
-        metaData: {timeCreated: Date.now()},
+        metaData: {
+          timeCreated: Date.now(),
+          timeOfCompletion: undefined,
+          timeMovedToBacklog: [],
+          timeMovedToFrontlog: [],
+        },
         id: generatedId,
         timeLimitToComplete: inputs.current.timeLimit,
       };

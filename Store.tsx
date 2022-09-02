@@ -25,6 +25,9 @@ export interface Task {
   description: string;
   metaData: {
     timeCreated: number;
+    timeMovedToFrontlog: number[];
+    timeMovedToBacklog: number[];
+    timeOfCompletion?: number;
   };
   timeLimitToComplete?: number;
 }

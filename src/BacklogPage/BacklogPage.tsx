@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import Store, {Task} from "../../Store";
-import TaskCard from "../SharedBetweenPages/TaskCard";
+import TaskCard from "../SharedBetweenPages/TaskCards/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
 import AddTaskHeader from "../SharedBetweenPages/AddTaskHeader";
 
@@ -18,6 +18,7 @@ const BacklogPage: FC = () => {
       const store = await Store.getTaskItems();
       store.backlogIds = store.backlogIds.filter(id => id !== task.id);
       store.frontlogIds.push(task.id);
+      store.tasks[task.id].metaData.timeMovedToFrontlog.push(Date.now());
       Store.setStore(store);
     })();
   };
