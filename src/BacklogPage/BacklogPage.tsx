@@ -1,9 +1,9 @@
 import React, {FC, useState} from "react";
 import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import Store, {Task} from "../../Store";
-import TaskCard from "../SharedBetweenPages/TaskCards/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
 import AddTaskHeader from "../SharedBetweenPages/AddTaskHeader";
+import GeneralTaskCard from "../SharedBetweenPages/TaskCards/GeneralTaskCard";
 
 const BacklogPage: FC = () => {
   const [getBacklogTasks, setBacklogTasks] = useState<Task[]>();
@@ -67,7 +67,9 @@ const BacklogPage: FC = () => {
             <></>
           )}
           {getBacklogTasks?.map(task => (
-            <TaskCard task={task} key={task.id} child={cardButtons(task)} />
+            <GeneralTaskCard task={task} key={task.id}>
+              {cardButtons(task)}
+            </GeneralTaskCard>
           ))}
         </View>
       </ScrollView>

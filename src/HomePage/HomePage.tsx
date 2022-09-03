@@ -1,10 +1,10 @@
 import React, {FC, useState} from "react";
 import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import Store, {Task} from "../../Store";
-import TaskCard from "../SharedBetweenPages/TaskCards/TaskCard";
 import ButtonRectangle from "../SharedBetweenPages/ButtonRectangle";
 import PossibleDotColors from "../ColourWallPage/PossibleDotColors";
 import AddTaskHeader from "../SharedBetweenPages/AddTaskHeader";
+import GeneralTaskCard from "../SharedBetweenPages/TaskCards/GeneralTaskCard";
 
 function randomInt(max: number = 100): number {
   return Math.floor(Math.random() * max);
@@ -85,7 +85,9 @@ const HomePage: FC = () => {
             <></>
           )}
           {getFrontlogTasks?.map(task => (
-            <TaskCard task={task} key={task.id} child={cardButtons(task)} />
+            <GeneralTaskCard task={task} key={task.id}>
+              {cardButtons(task)}
+            </GeneralTaskCard>
           ))}
         </View>
       </ScrollView>

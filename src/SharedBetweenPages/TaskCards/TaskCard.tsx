@@ -1,188 +1,32 @@
-import React, {FC, useRef, useState} from "react";
-import Store, {Task} from "../../../Store";
+import React, {FC, ReactNode, useState} from "react";
+import {Task} from "../../../Store";
 import {StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import Popup from "../Popup";
-import InputText from "../InputText";
-import ButtonRectangle from "../ButtonRectangle";
-import TimeLimitDropDown from "../AddTaskPage/TimeLimitDropDown";
-import DateTimeHelpers from "../../../helpers/DateTimeHelpers";
-
-interface EditableFields {
-  title: boolean;
-  description: boolean;
-  timeLimit: boolean;
-}
 
 const TaskCard: FC<{
   task: Task;
-  child?: JSX.Element;
+  children?: ReactNode;
   backgroundColor?: string;
-}> = ({task, child, backgroundColor = "#FFFFFF"}) => {
+  popupContent: JSX.Element;
+  onPopupOpen?: () => void;
+  onPopupClose?: () => void;
+}> = ({
+  task,
+  children,
+  backgroundColor = "#FFFFFF",
+  popupContent,
+  onPopupOpen,
+  onPopupClose,
+}) => {
   const [getIsVisible, doSetIsVisible] = useState(false);
-  const [isEditMode, setIsEditMode] = useState<EditableFields>({
-    title: false,
-    description: false,
-    timeLimit: false,
-  });
-  const [isErrMsg, setIsErrMsg] = useState<boolean>(false);
-  const taskRef = useRef<{
-    title: string;
-    description: string;
-    timeLimit?: number;
-  }>({
-    title: task.title,
-    description: task.description,
-    timeLimit: task.timeLimitToComplete,
-  });
-
-  const onCancel = () => {
-    setIsEditMode(prevState => {
-      Object.keys(prevState).forEach(
-        it => (prevState[it as keyof EditableFields] = false),
-      );
-      return prevState;
-    });
-    setIsErrMsg(false);
-  };
 
   const setIsVisible = (value: boolean) => {
-    if (!value) {
-      onCancel();
+    if (!value && onPopupOpen) {
+      onPopupOpen();
+    } else if (onPopupClose) {
+      onPopupClose();
     }
     doSetIsVisible(value);
-  };
-
-  const onSave = () => {
-    if (isEditMode.title && taskRef.current.title.trim().length === 0) {
-      setIsErrMsg(true);
-      return;
-    }
-    Store.getTaskItems()
-      .then(store => {
-        if (isEditMode.title) {
-          store.tasks[task.id].title = taskRef.current.title;
-        }
-        if (isEditMode.description) {
-          store.tasks[task.id].description = taskRef.current.description;
-        }
-        if (isEditMode.timeLimit) {
-          store.tasks[task.id].timeLimitToComplete = taskRef.current.timeLimit;
-        }
-        return store;
-      })
-      .then(store => {
-        Store.setStore(store);
-      })
-      .then(() => onCancel())
-      .catch(e => console.log("onSave: TaskCard", e));
-  };
-
-  const popupContent = () => {
-    const descriptionToRender =
-      task.description.trim().length === 0
-        ? "No description given!"
-        : task.description;
-    return (
-      <View>
-        {isErrMsg ? (
-          <Text style={{color: "red"}}>Title cannot be empty!</Text>
-        ) : (
-          <></>
-        )}
-        {isEditMode.title ? (
-          <InputText
-            defaultValue={taskRef.current.title}
-            onChangeText={value => {
-              taskRef.current.title = value;
-              setIsErrMsg(false);
-            }}
-          />
-        ) : (
-          <Text
-            onLongPress={() => {
-              setIsEditMode(prevState => {
-                taskRef.current.title = task.title;
-                prevState.title = true;
-                return prevState;
-              });
-            }}
-            style={{textAlign: "center"}}>
-            {task.title}
-          </Text>
-        )}
-        <View style={{borderWidth: 1, marginVertical: 6}} />
-        <Text
-          style={{
-            textDecorationLine: "underline",
-            fontWeight: "bold",
-            marginBottom: 6,
-          }}>
-          Description:
-        </Text>
-        {isEditMode.description ? (
-          <InputText
-            defaultValue={taskRef.current.description}
-            onChangeText={value => (taskRef.current.description = value)}
-          />
-        ) : (
-          <Text
-            onLongPress={() => {
-              setIsEditMode(prevState => {
-                taskRef.current.description = task.description;
-                prevState.description = true;
-                return prevState;
-              });
-            }}>
-            {descriptionToRender}
-          </Text>
-        )}
-        <Text
-          style={{
-            textDecorationLine: "underline",
-            fontWeight: "bold",
-            marginBottom: 6,
-          }}>
-          Time limit:
-        </Text>
-        {isEditMode.timeLimit ? (
-          <TimeLimitDropDown
-            setSelectedValue={value => (taskRef.current.timeLimit = value)}
-          />
-        ) : (
-          <Text
-            onLongPress={() => {
-              setIsEditMode(prevState => {
-                taskRef.current.timeLimit = task.timeLimitToComplete;
-                prevState.timeLimit = true;
-                return prevState;
-              });
-            }}>
-            {DateTimeHelpers.toString(task.timeLimitToComplete)}
-          </Text>
-        )}
-
-        {Object.values(isEditMode).find(it => it) === undefined ? (
-          <></>
-        ) : (
-          <View style={{flexDirection: "row", marginTop: 7}}>
-            <View style={{flex: 1, marginRight: 3}}>
-              <ButtonRectangle
-                onPress={onSave}
-                title={"Save"}
-                backgroundColor={"#83FF8D"}
-              />
-            </View>
-            <View style={{flex: 1, marginLeft: 3}}>
-              <ButtonRectangle
-                onPress={onCancel}
-                title={"Cancel"}
-                backgroundColor={"#FF8383"}
-              />
-            </View>
-          </View>
-        )}
-      </View>
-    );
   };
 
   return (
@@ -196,13 +40,13 @@ const TaskCard: FC<{
           <Text style={{marginBottom: 15, marginHorizontal: 5}}>
             {task.title}
           </Text>
-          {child}
+          {children}
         </View>
       </TouchableHighlight>
       <Popup
         getIsVisible={getIsVisible}
         setIsVisible={setIsVisible}
-        child={popupContent()}
+        child={popupContent}
       />
     </>
   );
