@@ -13,10 +13,11 @@ interface EditableFields {
   timeLimit: boolean;
 }
 
-const GeneralTaskCard: FC<{task: Task; children?: ReactNode}> = ({
-  task,
-  children,
-}) => {
+const GeneralTaskCard: FC<{
+  task: Task;
+  children?: ReactNode;
+  backgroundColor?: string;
+}> = ({task, children, backgroundColor}) => {
   const [isEditMode, setIsEditMode] = useState<EditableFields>({
     title: false,
     description: false,
@@ -148,7 +149,9 @@ const GeneralTaskCard: FC<{task: Task; children?: ReactNode}> = ({
                 return prevState;
               });
             }}>
-            {DateTimeHelpers.toString(task.timeLimitToComplete)}
+            {DateTimeHelpers.toString(task.timeLimitToComplete)
+              ? DateTimeHelpers.toString(task.timeLimitToComplete)
+              : "No time limit"}
           </Text>
         )}
 
@@ -180,7 +183,8 @@ const GeneralTaskCard: FC<{task: Task; children?: ReactNode}> = ({
       task={task}
       onPopupClose={onCancel}
       popupContent={popupContent()}
-      onPopupOpen={onCancel}>
+      onPopupOpen={onCancel}
+      backgroundColor={backgroundColor}>
       {children}
     </TaskCard>
   );
